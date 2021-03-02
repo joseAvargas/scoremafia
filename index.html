@@ -4,9 +4,85 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="./src/styles.css">
+
+    <script src="./node_modules/jquery/dist/jquery.js"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    
+
     <title>Score Mafia</title>
 </head>
-<body>
-    <h1>Welcome to Score Mafia</h1>
+<body class="bg-color">
+    <!-- nav bar -->
+    <div>
+        <nav class="pl-5 navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Score Mafia</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item active">
+                  <a class="nav-link" href="#">NBA <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">NFL</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">NHL</a>
+                </li>
+                
+              </ul>
+            </div>
+          </nav>
+    </div>
+
+    <!-- container -->
+    <div class="px-5 py-5 container-fluid">
+        
+        <!-- start game cards -->
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-4">
+            <div class="col mb-4">
+                <div class="card h-100">
+                <img src="./src/assets/thumbnail.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                </div>
+                </div>
+            </div>
+            <div class="col mb-4">
+                <div class="card h-100">
+                <img src="./src/assets/thumbnail.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                </div>
+                </div>
+            </div>
+            <div class="col mb-4">
+                <div class="card h-100">
+                <img src="./src/assets/thumbnail.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                </div>
+                </div>
+            </div>
+            <div class="col mb-4">
+                <div class="card h-100">
+                    <img src="./src/assets/thumbnail.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- end game cards -->
+    </div>
+    <!-- end container -->
 </body>
 </html>
