@@ -10,6 +10,7 @@
     <script src="./node_modules/jquery/dist/jquery.js"></script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.js"></script>
 
+    <script src="src/scripts.js"></script>
 
     <title>Score Mafia</title>
 </head>
@@ -42,48 +43,17 @@
     <div class="px-5 py-5 container-fluid">
 
         <!-- start game cards -->
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-4">
-            <div class="col mb-4">
-                <div class="card h-100">
-                <img src="./src/assets/thumbnail.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                </div>
-                </div>
-            </div>
-            <div class="col mb-4">
-                <div class="card h-100">
-                <img src="./src/assets/thumbnail.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                </div>
-                </div>
-            </div>
-            <div class="col mb-4">
-                <div class="card h-100">
-                <img src="./src/assets/thumbnail.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                </div>
-                </div>
-            </div>
-            <div class="col mb-4">
-                <div class="card h-100">
-                    <img src="./src/assets/thumbnail.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                    </div>
-                </div>
-            </div>
+        <div id="card-deck" class="row row-cols-1 row-cols-sm-2 row-cols-xl-4">
+            <!-- this is where the function should go to dynamically generate cards? -->
+            <script>
+            // setInterval(getApiData(), 5000);
+            getApiData();
+            </script>
 
         </div>
         <!-- end game cards -->
     </div>
     <!-- end container -->
-    <script src="src/scripts.js"></script>
+
 </body>
 </html>
