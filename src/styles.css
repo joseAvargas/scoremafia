@@ -1,3 +1,43 @@
-.bg-color {
-    background-color: #e0e0e0;
+.winner {
+    background-color: #a0d1ca;
 }
+.nav-bg-dark {
+    background-color: #000000 !important;
+}
+
+.bg-color {
+    background-color: #d6d2c4;
+}
+
+.card-header {
+    background-color: #8a391b;
+    font-weight: bold;
+    font-size: 24px;
+    color: #ffffff;
+}
+
+.card-footer {
+    background-color: #f68d2e;
+    font-size: 20px;
+    font-weight: bold;
+    color: #000000;
+}
+
+.card-body {
+    padding: .75rem;
+}
+
+.image-row {
+    display: flex;
+}
+
+.image-col {
+    flex: 50%;
+    padding: 0; 
+}
+
+@media screen and (max-width: 500px) {
+    .image-col {
+      width: 100%;
+    }
+  }

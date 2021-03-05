@@ -16,7 +16,7 @@
 <body class="bg-color">
     <!-- nav bar -->
     <div>
-        <nav class="pl-5 navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="pl-5 navbar navbar-expand-lg navbar-dark nav-bg-dark">
             <a class="navbar-brand" href="#">Score Mafia</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -42,43 +42,75 @@
     <div class="px-5 py-5 container-fluid">
 
         <!-- start game cards -->
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-4">
-            <div class="col mb-4">
-                <div class="card h-100">
-                <img src="./src/assets/thumbnail.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                </div>
-                </div>
+        <div id="card-deck" class="row row-cols-1 row-cols-sm-2 row-cols-xl-4">
+          
+          <div class="col mb-4">
+            <div class="card h-100">
+              <div class="card-header text-center">LAC @ WSH</div>
+              <div class="image-row">
+                  <div class="image-col text-center">
+                    <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/lac.png" class="card-img-top" alt="...">
+                    <h3 class="py-3">99</h3>
+                  </div>
+                  <div class="image-col text-center">
+                    <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/wsh.png" class="card-img-top" alt="...">
+                    <h3 class="py-3">103</h3>
+                  </div>
+              </div>
+              <div class="card-footer text-center">Q1 7:20</div>
             </div>
-            <div class="col mb-4">
-                <div class="card h-100">
-                <img src="./src/assets/thumbnail.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                </div>
-                </div>
+          </div>
+          <div class="col mb-4">
+            <div class="card h-100">
+              <div class="card-header text-center">DET @ NY</div>
+              <div class="image-row">
+                  <div class="image-col text-center">
+                    <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/det.png" class="card-img-top" alt="...">
+                    <h3 class="py-3">104</h3>
+                  </div>
+                  <div class="image-col text-center">
+                    <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/ny.png" class="card-img-top" alt="...">
+                    <h3 class="py-3">113</h3>
+                  </div>
+              </div>
+              <div class="card-footer text-center">Q3 10:00</div>
             </div>
-            <div class="col mb-4">
-                <div class="card h-100">
-                <img src="./src/assets/thumbnail.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                </div>
-                </div>
+          </div>
+          <div class="col mb-4">
+            <div class="card h-100">
+              <div class="card-header text-center">TOR @ BOS</div>
+              <div class="image-row">
+                  <div class="image-col text-center">
+                    <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/tor.png" class="card-img-top" alt="...">
+                    <h3 class="py-3">125</h3>
+                  </div>
+                  <div class="image-col text-center">
+                    <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/bos.png" class="card-img-top" alt="...">
+                    <h3 class="py-3 winner">132</h3>
+                  </div>
+              </div>
+              <div class="card-footer text-center">FINAL</div>
             </div>
-            <div class="col mb-4">
-                <div class="card h-100">
-                    <img src="./src/assets/thumbnail.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                    </div>
-                </div>
+          </div>
+          <div class="col mb-4">
+            <div class="card h-100">
+              <div class="card-header text-center">DEN @ IND</div>
+              <div class="image-row">
+                  <div class="image-col text-center">
+                    <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/den.png" class="card-img-top" alt="...">
+                    <h3 class="py-3 winner">113</h3>
+                  </div>
+                  <div class="image-col text-center">
+                    <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/ind.png" class="card-img-top" alt="...">
+                    <h3 class="py-3">103</h3>
+                  </div>
+              </div>
+              <div class="card-footer text-center">FINAL</div>
             </div>
+          </div>
+           
+            
+            
 
         </div>
         <!-- end game cards -->
