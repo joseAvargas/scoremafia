@@ -4,16 +4,14 @@ var request = new XMLHttpRequest();
 request.open('GET', 'http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard', true);
 
 function getApiData() {
+  // request.onload = function () {
+  //   // Begin accessing JSON data here
+  //   var data = JSON.parse(this.response);
+  //   var events = data["events"]
+  //   loadApiData(events);
+  // };
 
-  request.onload = function () {
-    // Begin accessing JSON data here
-
-    var data = JSON.parse(this.response);
-    var events = data["events"]
-    loadApiData(events);
-  };
-
-
+  loadApiData(data['events']);
 };
 
 function loadApiData(apiData) {
@@ -56,21 +54,45 @@ function createCardsFront(num, gameName, awayImg, awayScore, homeImg, homeScore,
   newDiv.id = idName
   // console.log(newDiv.id);
 
+  //<div class="card-flip" id='card-2'>
+  var cardFlipId = "card-" + (num + 1);
+  var cardFlipDiv = document.createElement("div");
+  cardFlipDiv.className = "card-flip";
+  cardFlipDiv.id = cardFlipId;
+  newDiv.appendChild(cardFlipDiv);
+
   //     <div class="card h-100">
   var subDiv = document.createElement("div");
-  subDiv.className = "card h-100";
-  newDiv.appendChild(subDiv);
+  subDiv.className = "front card h-100 card-custom bg-white border-white border-0";
+  cardFlipDiv.appendChild(subDiv);
+
+  //<span class="card-stats-right">
+  var spanStats = document.createElement("span");
+  spanStats.className = "card-stats-right";
+  subDiv.appendChild(spanStats);
+
+  //<button class="btn text-white" title="view stats" onclick="flip('card-1')">
+  var spanStatsBtn = document.createElement("button");
+  spanStatsBtn.className = "btn text-white";
+  spanStatsBtn.setAttribute("title", "view stats");
+  spanStatsBtn.setAttribute("onClick", "flip('" + cardFlipId + "')");
+  spanStats.appendChild(spanStatsBtn);
+
+  //<i class="fas fa-list-ul fa-2x"></i>
+  var statsIcon = document.createElement("i");
+  statsIcon.className = "fas fa-list-ul fa-2x";
+  spanStatsBtn.appendChild(statsIcon);
 
   // <div class="card-header text-center">DET @ NY</div>
   //set the team names here for the game
   var cardHeader = document.createElement("div");
-  cardHeader.className = "card-header text-center";
+  cardHeader.className = "card-header text-center bg-dark-orange";
   cardHeader.innerHTML = gameName;
   subDiv.appendChild(cardHeader);
 
   // <div class="image-row">
   var imageRow = document.createElement("div");
-  imageRow.className = "image-row";
+  imageRow.className = "image-row bg-white";
   insertAfter(cardHeader, imageRow);
 
   // <div class="image-col text-center">
@@ -114,9 +136,11 @@ function createCardsFront(num, gameName, awayImg, awayScore, homeImg, homeScore,
   // <div class="card-footer text-center">Q3 10:00</div>
   //set the quarter and time here
   var gameTime = document.createElement("div");
-  gameTime.className = "card-footer text-center";
+  gameTime.className = "card-footer text-center bg-light-orange";
   gameTime.innerHTML = time;
   insertAfter(imageRow, gameTime);
+
+  createCardsBack(cardFlipId, cardFlipDiv);
 
   if(num === 0) {
     var currentDiv = document.getElementById("card-deck");
@@ -129,8 +153,54 @@ function createCardsFront(num, gameName, awayImg, awayScore, homeImg, homeScore,
   }
 };
 
+function createCardsBack(cardFlipId, referenceNode) {
+  //<div class="back card h-100 bg-light-aqua" style="position: absolute; top: 0;">
+  var backDiv = document.createElement("div");
+  backDiv.className = "back card h-100 bg-light-aqua";
+  backDiv.setAttribute("style", "position: absolute; top: 0;")
+  referenceNode.appendChild(backDiv);
+
+  //<span class="card-return-icon-left">
+  var spanReturn = document.createElement("span");
+  spanReturn.className = "card-return-icon-left";
+  backDiv.appendChild(spanReturn);
+
+  //<button class="btn" title="view score" onclick="flip('card-1')">
+  var returnBtn = document.createElement("button");
+  returnBtn.className = "btn";
+  returnBtn.setAttribute("title", "view score");
+  returnBtn.setAttribute("onClick", "flip('" + cardFlipId + "')");
+  spanReturn.appendChild(returnBtn);
+
+  //<i class="fas fa-undo-alt fa-2x"></i>
+  var returnIcon = document.createElement("i");
+  returnIcon.className ="fas fa-undo-alt fa-2x";
+  returnBtn.appendChild(returnIcon);
+
+  var backCardBody = document.createElement("div");
+  backCardBody.className = "card-body";
+  backCardBody.setAttribute("style", "overflow-y: auto;");
+  backDiv.appendChild(backCardBody);
+
+  var backCardTitle = document.createElement("h5");
+  backCardTitle.className = "card-title py-3";
+  backCardTitle.innerHTML = "Sample Title";
+  backCardBody.appendChild(backCardTitle);
+
+}
+
 function insertAfter(referenceNode, newNode) {
   referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
 
-  request.send();
+// used to help flip the cards on the left sidebar
+function flip(name) {
+  var x = document.getElementById(name);
+  if (x.className.indexOf("flipped") == -1) {
+    x.className += " flipped";
+  } else { 
+    x.className = x.className.replace(" flipped", "");
+  }
+}
+
+//request.send();
