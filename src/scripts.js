@@ -30,3 +30,13 @@ request.onload = function () {
 
 // Send request
 request.send();
+
+// used to help flip the cards on the left sidebar
+function flip(name) {
+  var x = document.getElementById(name);
+  if (x.className.indexOf("flipped") == -1) {
+    x.className += " flipped";
+  } else { 
+    x.className = x.className.replace(" flipped", "");
+  }
+}
