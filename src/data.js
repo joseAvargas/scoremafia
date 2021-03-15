@@ -1,4 +1,4 @@
-var data = {
+const data = Object.freeze({
     "leagues" : [
       {
         "id": "46",
@@ -14690,4 +14690,4 @@ var data = {
         }
       }
     ]
-  }
+  })
