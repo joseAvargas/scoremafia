@@ -21,29 +21,46 @@ function loadApiData(apiData) {
     const quarter = apiData[i]["status"]["period"];
     const clock = apiData[i]["status"]["displayClock"];
 
-    const time = "Q" + quarter + " " + clock;
+    let time = "Q" + quarter + " " + clock;
 
-    if(quarter === 4 && clock === 0.0) { time = "FINAL"; }
+    if(quarter === 4 && clock === "0.0") { time = "FINAL"; }
 
     const homeTeam = apiData[i]["competitions"][0]["competitors"][0]["team"]["shortDisplayName"];
     const homeLogo = apiData[i]["competitions"][0]["competitors"][0]["team"]["logo"];
     const homeScore = apiData[i]["competitions"][0]["competitors"][0]["score"];
-
+    const homeIsWinner = apiData[i]["competitions"][0]["competitors"][0]["winner"]
 
     const gameN = apiData[i]["shortName"];
 
     const awayTeam = apiData[i]["competitions"][0]["competitors"][1]["team"]["shortDisplayName"];
     const awayLogo = apiData[i]["competitions"][0]["competitors"][1]["team"]["logo"];
     const awayScore = apiData[i]["competitions"][0]["competitors"][1]["score"];
+    const awayIsWinner = apiData[i]["competitions"][0]["competitors"][1]["winner"]
 
-    insertGameCards(document.getElementById('card-deck'), createCards(i, gameN, awayLogo, awayScore, homeLogo, homeScore, time));
+    insertGameCards(document.getElementById('card-deck'), createCards(i, gameN, awayLogo, awayScore, homeLogo, homeScore, homeTeam, awayTeam, time));
+    markWinningTeam(i, ...checkForWinningTeam(homeIsWinner, homeTeam, awayIsWinner, awayTeam));
 
   }
 
 };
 
+// helper function that checks if there is winner and who that winner is
+function checkForWinningTeam(homeIsWinner, homeTeam, awayIsWinner, awayTeam)
+{
+  if(homeIsWinner) return [homeIsWinner, homeTeam];
+  if(awayIsWinner) return [awayIsWinner, awayTeam];
+  
+  return [false, "none"];
+}
+
+// used to mark the winning team on a game card
+function markWinningTeam(num, winnerExists, winningTeam)
+{
+  if(winnerExists) { document.getElementById(`${winningTeam}-${num}`).className += " winner"; }
+}
+
 // used to create the front and back of the game cards
-function createCards(num, gameName, awayImg, awayScore, homeImg, homeScore, time)
+function createCards(num, gameName, awayImg, awayScore, homeImg, homeScore, homeTeam, awayTeam, time)
 {
     let htmlString = `<div class="col mb-4" id="div${num}">
         <div class="card-flip" id="card-${num}">
@@ -55,11 +72,11 @@ function createCards(num, gameName, awayImg, awayScore, homeImg, homeScore, time
                 <div class="image-row bg-white">
                     <div class="image-col text-center">
                         <img class="card-img-top" src="${awayImg}" alt="...">
-                        <h3 class="py-3">${awayScore}</h3>
+                        <h3 id="${awayTeam}-${num}" class="py-3">${awayScore}</h3>
                     </div>
                     <div class="image-col text-center">
                         <img class="card-img-top" src="${homeImg}" alt="...">
-                        <h3 class="py-3">${homeScore}</h3>
+                        <h3 id="${homeTeam}-${num}" class="py-3">${homeScore}</h3>
                     </div>
                 </div>
                 <div class="card-footer text-center bg-light-orange">${time}</div>
