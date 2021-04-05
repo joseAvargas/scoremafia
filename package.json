@@ -1,7 +1,11 @@
 {
   "dependencies": {
     "bootstrap": "^4.6.0",
+    "express": "^4.17.1",
     "jquery": "^3.5.1",
-    "popper.js": "^1.16.1"
+    "node-fetch": "^2.6.1",
+    "popper.js": "^1.16.1",
+    "socket.io": "^4.0.0",
+    "xmlhttprequest": "^1.8.0"
   }
 }
