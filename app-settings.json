@@ -1,5 +1,5 @@
 {
-    "development_env" : true,
+    "development_env" : false,
     "dev_api_url" : "http://localhost:3004/events",
     "apiUrl" : "http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard"
 }

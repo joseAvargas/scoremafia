@@ -36,6 +36,9 @@ function updateData(data) {
     const status = events[i]["status"]["type"]["state"];
     const gameTime = events[i]["status"]["type"]["shortDetail"];
 
+    const homeIsWinner = events[i]["competitions"][0]["competitors"][0]["winner"]
+    const awayIsWinner = events[i]["competitions"][0]["competitors"][1]["winner"]
+
     id = "id" + i.toString();
     let changeHomeScore = homeTeam + "-" + i.toString();
     let homeScoreObject = document.getElementById(changeHomeScore);
@@ -49,6 +52,7 @@ function updateData(data) {
     let timeObject = document.getElementById(getTime);
     timeObject.innerHTML = checkTime(status, gameTime, quarter, clock, homeScore, awayScore);
 
+    markWinningTeam(i, ...checkForWinningTeam(homeIsWinner, homeTeam, awayIsWinner, awayTeam));
 
   }
 }
@@ -99,7 +103,6 @@ function loadApiData(apiData) {
     const quarter = apiData[i]["status"]["period"];
     const clock = apiData[i]["status"]["displayClock"];
 
-
     const homeTeam = apiData[i]["competitions"][0]["competitors"][0]["team"]["shortDisplayName"];
     const homeLogo = apiData[i]["competitions"][0]["competitors"][0]["team"]["logo"];
     const homeScore = apiData[i]["competitions"][0]["competitors"][0]["score"];
@@ -117,12 +120,45 @@ function loadApiData(apiData) {
 
     let time = checkTime(status, gameTime, quarter, clock, homeScore, awayScore);
 
-    insertGameCards(document.getElementById('card-deck'), createCards(i, gameN, awayLogo, awayScore, homeLogo, homeScore, homeTeam, awayTeam, time));
+    insertGameCards(document.getElementById('card-deck'), createCards(i, gameN, awayLogo, awayScore, homeLogo, homeScore, homeTeam, awayTeam, time, apiData[i]));
     markWinningTeam(i, ...checkForWinningTeam(homeIsWinner, homeTeam, awayIsWinner, awayTeam));
 
   }
 
 };
+
+function createBackCard(currentGame)
+{
+  let htmlString;
+
+  if(currentGame["competitions"][0]["competitors"][0]["leaders"] == undefined) {
+    htmlString = "No Leaders Yet";
+  }
+  else {
+    const homePtsLeader = currentGame["competitions"][0]["competitors"][0]["leaders"][3]["leaders"][0];
+    const awayPtsLeader = currentGame["competitions"][0]["competitors"][1]["leaders"][3]["leaders"][0];
+    let title = "";
+
+    currentGame["status"]["type"]["state"] !== "pre" ? title="TOP PERFORMERS" : title="PLAYERS TO WATCH";
+
+    htmlString = `<div class="card-header text-center bg-dark-orange">${title}</div>
+                    <div class="image-row bg-white pt-4">
+                      <div class="image-col text-center">
+                        <img class="card-img-top" src="${awayPtsLeader["athlete"]["headshot"]}" alt="...">
+                        <h4 class="pt-2">${awayPtsLeader["athlete"]["displayName"]}</h4>
+                        <p style="font-size: 9pt; font-weight: bold;" class="px-3 text-muted">${awayPtsLeader["displayValue"]}</p>
+                      </div>
+                    <div class="image-col text-center">
+                      <img class="card-img-top" src="${homePtsLeader["athlete"]["headshot"]}" alt="...">
+                      <h4 class="pt-2">${homePtsLeader["athlete"]["displayName"]}</h4>
+                      <p style="font-size: 9pt; font-weight: bold;" i class="px-3 text-muted">${homePtsLeader["displayValue"]}</p>
+                    </div>
+                  </div>`
+  }
+
+  return htmlString;
+
+}
 
 // helper function that checks if there is winner and who that winner is
 function checkForWinningTeam(homeIsWinner, homeTeam, awayIsWinner, awayTeam)
@@ -140,8 +176,10 @@ function markWinningTeam(num, winnerExists, winningTeam)
 }
 
 // used to create the front and back of the game cards
-function createCards(num, gameName, awayImg, awayScore, homeImg, homeScore, homeTeam, awayTeam, time)
+function createCards(num, gameName, awayImg, awayScore, homeImg, homeScore, homeTeam, awayTeam, time, currentGame)
 {
+    let backCardHtmlString = createBackCard(currentGame)
+
     let htmlString = `<div class="col mb-4" id="div${num}">
         <div class="card-flip" id="card-${num}">
             <div class="front card h-100 card-custom bg-white border-white border-0">
@@ -161,13 +199,11 @@ function createCards(num, gameName, awayImg, awayScore, homeImg, homeScore, home
                 </div>
                 <div id="time-${num}"class="card-footer text-center bg-light-orange">${time}</div>
             </div>
-            <div class="back card h-100 bg-light-aqua" style="position: absolute; top: 0;">
+            <div class="back card h-100 bg-white" style="position: absolute; top: 0;">
                 <span class="card-return-icon-left">
-                    <button class="btn" title="view score" onclick="flip('card-${num}')"><i class="fas fa-undo-alt fa-2x"></i></button>
+                    <button class="btn text-white" title="view score" onclick="flip('card-${num}')"><i class="fas fa-undo-alt fa-2x"></i></button>
                 </span>
-                <div class="card-body" style="overflow-y: auto;">
-                    <h5 class="card-title py-3">Sample Title</h5>
-                </div>
+                ${backCardHtmlString}
             </div>
         </div>
     </div>`
