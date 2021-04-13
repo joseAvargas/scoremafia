@@ -50,7 +50,7 @@ function updateData(data) {
 
     let getTime = "time-" + i.toString();
     let timeObject = document.getElementById(getTime);
-    timeObject.innerHTML = checkTime(status, gameTime, quarter, clock, homeScore, awayScore);
+    timeObject.innerHTML = checkTime(status, gameTime.toUpperCase(), quarter, clock, homeScore, awayScore);
 
     markWinningTeam(i, ...checkForWinningTeam(homeIsWinner, homeTeam, awayIsWinner, awayTeam));
 
@@ -69,7 +69,7 @@ function checkTime(gStatus, gTime, quarter, clock, homeS, awayS) {
   // check for end of game
   else if(gStatus === "post") {
 
-    time = "FINAL"
+    time = gTime;
   }
   else if([1, 2, 3, 4].includes(quarter) && clock != '0.0') {
     time = "Q" + quarter + " " + clock;
@@ -118,7 +118,7 @@ function loadApiData(apiData) {
     const status = events[i]["status"]["type"]["state"];
     const gameTime = events[i]["status"]["type"]["shortDetail"];
 
-    let time = checkTime(status, gameTime, quarter, clock, homeScore, awayScore);
+    let time = checkTime(status, gameTime.toUpperCase(), quarter, clock, homeScore, awayScore);
 
     insertGameCards(document.getElementById('card-deck'), createCards(i, gameN, awayLogo, awayScore, homeLogo, homeScore, homeTeam, awayTeam, time, apiData[i]));
     markWinningTeam(i, ...checkForWinningTeam(homeIsWinner, homeTeam, awayIsWinner, awayTeam));
@@ -132,7 +132,25 @@ function createBackCard(currentGame)
   let htmlString;
 
   if(currentGame["competitions"][0]["competitors"][0]["leaders"] == undefined) {
-    htmlString = "No Leaders Yet";
+    const title = currentGame["status"]["type"]["shortDetail"];
+    const homeTeam = currentGame["competitions"][0]["competitors"][0]["team"]
+    const awayTeam  = currentGame["competitions"][0]["competitors"][1]["team"]
+
+    htmlString = `<div class="card-header text-center bg-dark-orange">${title}</div>
+                    <div class="image-row bg-white">
+                    <div class="image-col text-center">
+                      <img class="card-img-top" src="${awayTeam["logo"]}" alt="...">
+                      <a href="${awayTeam["links"][3]["href"]}" target=_blank>
+                        <p class="pt-2">See ${awayTeam["abbreviation"]} full schedule</p>
+                      </a>
+                    </div>
+                    <div class="image-col text-center">
+                      <img class="card-img-top" src="${homeTeam["logo"]}" alt="...">
+                      <a href="${homeTeam["links"][3]["href"]}" target=_blank>
+                        <p class="pt-2">See ${homeTeam["abbreviation"]} full schedule</p>
+                      </a>
+                    </div>
+                  </div>`
   }
   else {
     const homePtsLeader = currentGame["competitions"][0]["competitors"][0]["leaders"][3]["leaders"][0];
