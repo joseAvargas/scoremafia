@@ -1,7 +1,4 @@
-
-
 function getApiData(data) {
-
   events = data;
   let divCount = $('#card-deck').children('div').length;
 
@@ -24,39 +21,26 @@ function updateData(data) {
   events = data;
 
   for(let i = 0; i < events.length; i++) {
+    let homeTeam = getHomeTeamData(events, i);
+    let awayTeam = getAwayTeamData(events, i);
+    let gameDetails = getGameDetails(events, i);
 
-    const homeTeam = events[i]["competitions"][0]["competitors"][0]["team"]["shortDisplayName"];
-    const homeScore = events[i]["competitions"][0]["competitors"][0]["score"];
-
-    const awayTeam = events[i]["competitions"][0]["competitors"][1]["team"]["shortDisplayName"];
-    const awayScore = events[i]["competitions"][0]["competitors"][1]["score"];
-
-    const quarter = events[i]["status"]["period"];
-    const clock = events[i]["status"]["displayClock"];
-    const status = events[i]["status"]["type"]["state"];
-    const gameTime = events[i]["status"]["type"]["shortDetail"];
-
-    const homeIsWinner = events[i]["competitions"][0]["competitors"][0]["winner"]
-    const awayIsWinner = events[i]["competitions"][0]["competitors"][1]["winner"]
-
-    id = "id" + i.toString();
-    let changeHomeScore = homeTeam + "-" + i.toString();
+    let changeHomeScore = homeTeam.teamName + "-" + i.toString();
     let homeScoreObject = document.getElementById(changeHomeScore);
-    homeScoreObject.innerHTML = homeScore;
+    homeScoreObject.innerHTML = homeTeam.score;
 
-    let changeAwayScore = awayTeam + "-" + i.toString();
+    let changeAwayScore = awayTeam.teamName + "-" + i.toString();
     let awayScoreObject = document.getElementById(changeAwayScore);
-    awayScoreObject.innerHTML = awayScore;
+    awayScoreObject.innerHTML = awayTeam.score;
 
     let getTime = "time-" + i.toString();
     let timeObject = document.getElementById(getTime);
-    timeObject.innerHTML = checkTime(status, gameTime.toUpperCase(), quarter, clock, homeScore, awayScore);
+    timeObject.innerHTML = checkTime(gameDetails.status, gameDetails.gameTime.toUpperCase(), gameDetails.quarter, gameDetails.clock, homeTeam.score, awayTeam.score);
 
-    markWinningTeam(i, ...checkForWinningTeam(homeIsWinner, homeTeam, awayIsWinner, awayTeam));
+    markWinningTeam(i, ...checkForWinningTeam(...getWinnerStates(events, i)));
 
   }
 }
-
 
 function checkTime(gStatus, gTime, quarter, clock, homeS, awayS) {
 
@@ -93,83 +77,58 @@ function checkTime(gStatus, gTime, quarter, clock, homeS, awayS) {
   return time
 }
 
-
-
-
 function loadApiData(apiData) {
 
   for(let i = 0; i < apiData.length; i++) {
+    let homeTeam = getHomeTeamData(apiData, i);
+    let awayTeam = getAwayTeamData(apiData, i);
+    let gameDetails = getGameDetails(apiData, i);
+    let topPerformers = getTopPerformers(apiData, i);
 
-    const quarter = apiData[i]["status"]["period"];
-    const clock = apiData[i]["status"]["displayClock"];
+    let time = checkTime(gameDetails.status, gameDetails.gameTime.toUpperCase(), gameDetails.quarter, gameDetails.clock, homeTeam.score, awayTeam.score);
 
-    const homeTeam = apiData[i]["competitions"][0]["competitors"][0]["team"]["shortDisplayName"];
-    const homeLogo = apiData[i]["competitions"][0]["competitors"][0]["team"]["logo"];
-    const homeScore = apiData[i]["competitions"][0]["competitors"][0]["score"];
-    const homeIsWinner = apiData[i]["competitions"][0]["competitors"][0]["winner"]
-
-    const gameN = apiData[i]["shortName"];
-
-    const awayTeam = apiData[i]["competitions"][0]["competitors"][1]["team"]["shortDisplayName"];
-    const awayLogo = apiData[i]["competitions"][0]["competitors"][1]["team"]["logo"];
-    const awayScore = apiData[i]["competitions"][0]["competitors"][1]["score"];
-    const awayIsWinner = apiData[i]["competitions"][0]["competitors"][1]["winner"]
-
-    const status = events[i]["status"]["type"]["state"];
-    const gameTime = events[i]["status"]["type"]["shortDetail"];
-
-    let time = checkTime(status, gameTime.toUpperCase(), quarter, clock, homeScore, awayScore);
-
-    insertGameCards(document.getElementById('card-deck'), createCards(i, gameN, awayLogo, awayScore, homeLogo, homeScore, homeTeam, awayTeam, time, apiData[i]));
-    markWinningTeam(i, ...checkForWinningTeam(homeIsWinner, homeTeam, awayIsWinner, awayTeam));
-
+    insertGameCards(document.getElementById('card-deck'), createCards(i, homeTeam, awayTeam, gameDetails, time, topPerformers));
+    markWinningTeam(i, ...checkForWinningTeam(...getWinnerStates(apiData, i)));
   }
 
 };
 
-function createBackCard(currentGame)
+function createBackCard(homeTeam, awayTeam, gameDetails, topPerformers)
 {
   let htmlString;
 
-  if(currentGame["competitions"][0]["competitors"][0]["leaders"] == undefined) {
-    const title = currentGame["status"]["type"]["shortDetail"];
-    const homeTeam = currentGame["competitions"][0]["competitors"][0]["team"]
-    const awayTeam  = currentGame["competitions"][0]["competitors"][1]["team"]
-
-    htmlString = `<div class="card-header text-center bg-dark-orange">${title}</div>
+  if(topPerformers === "no leaders") {
+    htmlString = `<div class="card-header text-center bg-dark-orange">${gameDetails.gameTime}</div>
                     <div class="image-row bg-white">
                     <div class="image-col text-center">
-                      <img class="card-img-top" src="${awayTeam["logo"]}" alt="...">
-                      <a href="${awayTeam["links"][3]["href"]}" target=_blank>
-                        <p class="pt-2">See ${awayTeam["abbreviation"]} full schedule</p>
+                      <img class="card-img-top" src="${awayTeam.teamLogo}" alt="...">
+                      <a href="${awayTeam.fullSchedule}" target=_blank>
+                        <p class="pt-2">See ${awayTeam.teamAbbreviation} full schedule</p>
                       </a>
                     </div>
                     <div class="image-col text-center">
-                      <img class="card-img-top" src="${homeTeam["logo"]}" alt="...">
-                      <a href="${homeTeam["links"][3]["href"]}" target=_blank>
-                        <p class="pt-2">See ${homeTeam["abbreviation"]} full schedule</p>
+                      <img class="card-img-top" src="${homeTeam.teamLogo}" alt="...">
+                      <a href="${homeTeam.fullSchedule}" target=_blank>
+                        <p class="pt-2">See ${homeTeam.teamAbbreviation} full schedule</p>
                       </a>
                     </div>
                   </div>`
   }
   else {
-    const homePtsLeader = currentGame["competitions"][0]["competitors"][0]["leaders"][3]["leaders"][0];
-    const awayPtsLeader = currentGame["competitions"][0]["competitors"][1]["leaders"][3]["leaders"][0];
     let title = "";
-
-    currentGame["status"]["type"]["state"] !== "pre" ? title="TOP PERFORMERS" : title="PLAYERS TO WATCH";
+    gameDetails.status !== "pre" ? title="TOP PERFORMERS" : title="PLAYERS TO WATCH";
 
     htmlString = `<div class="card-header text-center bg-dark-orange">${title}</div>
                     <div class="image-row bg-white pt-4">
                       <div class="image-col text-center">
-                        <img class="card-img-top" src="${awayPtsLeader["athlete"]["headshot"]}" alt="...">
-                        <h4 class="pt-2">${awayPtsLeader["athlete"]["displayName"]}</h4>
-                        <p style="font-size: 9pt; font-weight: bold;" class="px-3 text-muted">${awayPtsLeader["displayValue"]}</p>
+                        <img class="card-img-top" src="${topPerformers.awayLeaderImage}" alt="...">
+                        <h4 class="pt-2">${topPerformers.awayLeaderName}</h4>
+                        <p style="font-size: 9pt; font-weight: bold;" class="px-3 text-muted">${topPerformers.awayLeaderStats}</p>
                       </div>
                     <div class="image-col text-center">
-                      <img class="card-img-top" src="${homePtsLeader["athlete"]["headshot"]}" alt="...">
-                      <h4 class="pt-2">${homePtsLeader["athlete"]["displayName"]}</h4>
-                      <p style="font-size: 9pt; font-weight: bold;" i class="px-3 text-muted">${homePtsLeader["displayValue"]}</p>
+                      <img class="card-img-top" src="${topPerformers.homeLeaderImage}" alt="...">
+                      <h4 class="pt-2">${topPerformers.homeLeaderName}</h4>
+                      <p style="font-size: 9pt; font-weight: bold;" i class="px-3 text-muted">${topPerformers.homeLeaderStats}</p>
                     </div>
                   </div>`
   }
@@ -179,8 +138,7 @@ function createBackCard(currentGame)
 }
 
 // helper function that checks if there is winner and who that winner is
-function checkForWinningTeam(homeIsWinner, homeTeam, awayIsWinner, awayTeam)
-{
+function checkForWinningTeam(homeIsWinner, homeTeam, awayIsWinner, awayTeam) {
   if(homeIsWinner) return [homeIsWinner, homeTeam];
   if(awayIsWinner) return [awayIsWinner, awayTeam];
 
@@ -188,31 +146,28 @@ function checkForWinningTeam(homeIsWinner, homeTeam, awayIsWinner, awayTeam)
 }
 
 // used to mark the winning team on a game card
-function markWinningTeam(num, winnerExists, winningTeam)
-{
+function markWinningTeam(num, winnerExists, winningTeam) {
   if(winnerExists) { document.getElementById(`${winningTeam}-${num}`).className += " winner"; }
 }
 
 // used to create the front and back of the game cards
-function createCards(num, gameName, awayImg, awayScore, homeImg, homeScore, homeTeam, awayTeam, time, currentGame)
+function createCards(num, homeTeam, awayTeam, gameDetails, time, topPerformers)
 {
-    let backCardHtmlString = createBackCard(currentGame)
-
     let htmlString = `<div class="col mb-4" id="div${num}">
         <div class="card-flip" id="card-${num}">
             <div class="front card h-100 card-custom bg-white border-white border-0">
                 <span class="card-stats-right">
                     <button class="btn text-white" title="view stats" onclick="flip('card-${num}')"><i class="fas fa-list-ul fa-2x"></i></button>
                 </span>
-                <div class="card-header text-center bg-dark-orange">${gameName}</div>
+                <div class="card-header text-center bg-dark-orange">${gameDetails.gameName}</div>
                 <div class="image-row bg-white">
                     <div class="image-col text-center">
-                        <img class="card-img-top" src="${awayImg}" alt="...">
-                        <h3 id="${awayTeam}-${num}" class="py-3">${awayScore}</h3>
+                        <img class="card-img-top" src="${awayTeam.teamLogo}" alt="...">
+                        <h3 id="${awayTeam.teamName}-${num}" class="py-3">${awayTeam.score}</h3>
                     </div>
                     <div class="image-col text-center">
-                        <img class="card-img-top" src="${homeImg}" alt="...">
-                        <h3 id="${homeTeam}-${num}" class="py-3">${homeScore}</h3>
+                        <img class="card-img-top" src="${homeTeam.teamLogo}" alt="...">
+                        <h3 id="${homeTeam.teamName}-${num}" class="py-3">${homeTeam.score}</h3>
                     </div>
                 </div>
                 <div id="time-${num}"class="card-footer text-center bg-light-orange">${time}</div>
@@ -221,7 +176,7 @@ function createCards(num, gameName, awayImg, awayScore, homeImg, homeScore, home
                 <span class="card-return-icon-left">
                     <button class="btn text-white" title="view score" onclick="flip('card-${num}')"><i class="fas fa-undo-alt fa-2x"></i></button>
                 </span>
-                ${backCardHtmlString}
+                ${createBackCard(homeTeam, awayTeam, gameDetails, topPerformers)}
             </div>
         </div>
     </div>`
@@ -241,5 +196,3 @@ function flip(name) {
     x.className = x.className.replace(" flipped", "");
   }
 }
-
-// request.send();

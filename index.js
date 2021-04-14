@@ -8,9 +8,9 @@ const http = require('http').Server(app);
 const path = require('path')
 // import socket io library from NPM
 let io = require('socket.io')(http);
-let data = require('./src/fetch.js')
+let data = require('./src/fetch.js');
 
-app.use(express.static(__dirname + '/public'))
+app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/node_modules/jquery/dist/'));
 app.use(express.static(__dirname + '/node_modules/bootstrap/dist/'));
 app.use(express.static(__dirname + '/src'));
