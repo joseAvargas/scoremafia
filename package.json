@@ -12,5 +12,8 @@
     "popper.js": "^1.16.1",
     "socket.io": "^4.0.0",
     "xmlhttprequest": "^1.8.0"
+  },
+  "engines": {
+    "node": "14.15.0"
   }
 }

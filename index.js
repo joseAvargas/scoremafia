@@ -3,6 +3,8 @@ const express = require('express')
 const app = express();
 const http = require('http').Server(app);
 
+const PORT = process.env.PORT || 3000;
+
 
 
 const path = require('path')
@@ -33,8 +35,8 @@ app.get('/', function(req, res){
     // console.log(data.getData());
 });
 
-http.listen(80, function(){
-    console.log('HTTP server started on port 3000');
+http.listen(PORT, function(){
+    console.log(`HTTP server started on port ${PORT}`);
 });
 
 
