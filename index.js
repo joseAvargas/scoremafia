@@ -33,7 +33,7 @@ app.get('/', function(req, res){
     // console.log(data.getData());
 });
 
-http.listen(3000, function(){
+http.listen(80, function(){
     console.log('HTTP server started on port 3000');
 });
 
