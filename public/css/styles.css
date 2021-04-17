@@ -72,12 +72,12 @@
       -o-transform: rotateY( 180deg );
       transform: rotateY( 180deg );
   }
-  .card-flip.flipped .front { 
+  /* .card-flip.flipped .front { 
     -webkit-visibility: hidden !important;
     -moz-visibility: hidden !important;
     -o-visibility: hidden !important;
     visibility: hidden !important;
-  }
+  } */
 
   .card-flip.flipped .back { 
     -webkit-backface-visibility: visible !important;
