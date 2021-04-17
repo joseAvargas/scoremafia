@@ -15,7 +15,7 @@
   .bg-light-orange {background-color: #f68d2e !important;}
   .bg-cream {background-color: #f8e9d6 !important;}
   .bg-grey {background-color: #d6d2c4!important;}
-  .bg-light-grey {background-color: #f7f7f7!important;}
+  .bg-light-grey {background-color: #f8f9fa!important;}
   .bg-light-aqua {background-color: #a0d1ca !important;}
   
   .card-header {
@@ -71,6 +71,19 @@
       -moz-transform: rotateY( 180deg );
       -o-transform: rotateY( 180deg );
       transform: rotateY( 180deg );
+  }
+  .card-flip.flipped .front { 
+    -webkit-visibility: hidden !important;
+    -moz-visibility: hidden !important;
+    -o-visibility: hidden !important;
+    visibility: hidden !important;
+  }
+
+  .card-flip.flipped .back { 
+    -webkit-backface-visibility: visible !important;
+    -moz-backface-visibility: visible !important;
+    -o-backface-visibility: visible !important;
+    backface-visibility: visible !important;
   }
   .card-flip {
     width: 100%;
