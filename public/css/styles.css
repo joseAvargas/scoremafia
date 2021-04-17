@@ -1,3 +1,6 @@
+.logo {
+  width: 230px;
+}
 .btn {
     background-color: none;
     border: none;
@@ -6,7 +9,7 @@
       background-color: #a0d1ca;
   }
   .nav-bg-dark {
-      background-color: #000000 !important;
+      background-color: #333333 !important;
   }
   
   .bg-white {background-color: #ffffff;}
@@ -20,7 +23,7 @@
   
   .card-header {
       font-weight: bold;
-      font-size: 24px;
+      font-size: 1.25rem;
       color: #ffffff;
   }
   .card-footer {
@@ -49,14 +52,14 @@
     z-index: 30 !important;
     position: absolute !important;
     right: .65rem !important;
-    top: .50rem !important;
+    top: .65rem !important;
   }
   .card-stats-right
   {
     z-index: 30 !important;
     position: absolute !important; 
     right: .65rem !important;
-    top: .50rem !important;
+    top: .65rem !important;
   }
   
   /* css for flipping cards */
@@ -72,12 +75,12 @@
       -o-transform: rotateY( 180deg );
       transform: rotateY( 180deg );
   }
-  /* .card-flip.flipped .front { 
+  .card-flip.flipped .front { 
     -webkit-visibility: hidden !important;
     -moz-visibility: hidden !important;
     -o-visibility: hidden !important;
     visibility: hidden !important;
-  } */
+  }
 
   .card-flip.flipped .back { 
     -webkit-backface-visibility: visible !important;
@@ -120,7 +123,8 @@
   /* used for Mozilla browsers */
   .card-flip.flipped .card-stats-right { visibility: hidden; }
   .text-small-75 { font-size: .75rem !important;}
-  .text-small-90 { font-size: .90rem !important;} 
+  .text-small-90 { font-size: .90rem !important;}
+  .text-medium-125 { font-size: 1.25rem !important;} 
   .h-auto { height: auto !important;}
   
   .card-custom {

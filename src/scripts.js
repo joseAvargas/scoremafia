@@ -109,7 +109,7 @@ function createBackCard(homeTeam, awayTeam, gameDetails, topPerformers)
                     <div class="image-col text-center">
                       <img class="card-img-top" src="${homeTeam.teamLogo}" alt="...">
                       <a href="${homeTeam.fullSchedule}" target=_blank>
-                        <p class="pt-2">See ${homeTeam.teamAbbreviation} full schedule</p>
+                        <p class="pt-2 px-2">See ${homeTeam.teamAbbreviation} full schedule</p>
                       </a>
                     </div>
                   </div>`
@@ -122,12 +122,12 @@ function createBackCard(homeTeam, awayTeam, gameDetails, topPerformers)
                     <div class="image-row bg-white pt-4">
                       <div class="image-col text-center">
                         <img class="card-img-top" src="${topPerformers.awayLeaderImage}" alt="...">
-                        <h4 class="pt-2">${topPerformers.awayLeaderName}</h4>
+                        <h5 class="pt-2 px-3">${topPerformers.awayLeaderName}</h4>
                         <p style="font-size: 9pt; font-weight: bold;" class="px-3 text-muted">${topPerformers.awayLeaderStats}</p>
                       </div>
                     <div class="image-col text-center">
                       <img class="card-img-top" src="${topPerformers.homeLeaderImage}" alt="...">
-                      <h4 class="pt-2">${topPerformers.homeLeaderName}</h4>
+                      <h5 class="pt-2 px-3">${topPerformers.homeLeaderName}</h4>
                       <p style="font-size: 9pt; font-weight: bold;" i class="px-3 text-muted">${topPerformers.homeLeaderStats}</p>
                     </div>
                   </div>`
@@ -157,7 +157,7 @@ function createCards(num, homeTeam, awayTeam, gameDetails, time, topPerformers)
         <div class="card-flip" id="card-${num}">
             <div class="front card h-100 card-custom bg-white border-white border-0">
                 <span class="card-stats-right">
-                    <button class="btn text-white" title="view stats" onclick="flip('card-${num}')"><i class="fas fa-list-ul fa-2x"></i></button>
+                    <button class="btn text-white" title="view stats" onclick="flip('card-${num}')"><i class="text-medium-125 fas fa-list-ul fa-2x"></i></button>
                 </span>
                 <div class="card-header text-center bg-dark-orange">${gameDetails.gameName}</div>
                 <div class="image-row bg-white">
@@ -174,7 +174,7 @@ function createCards(num, homeTeam, awayTeam, gameDetails, time, topPerformers)
             </div>
             <div class="back card h-100 bg-white" style="position: absolute; top: 0;">
                 <span class="card-return-icon-left">
-                    <button class="btn text-white" title="view score" onclick="flip('card-${num}')"><i class="fas fa-undo-alt fa-2x"></i></button>
+                    <button class="btn text-white" title="view score" onclick="flip('card-${num}')"><i class="text-medium-125 fas fa-undo-alt fa-2x"></i></button>
                 </span>
                 ${createBackCard(homeTeam, awayTeam, gameDetails, topPerformers)}
             </div>
