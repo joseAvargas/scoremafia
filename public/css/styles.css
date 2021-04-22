@@ -1,3 +1,24 @@
+.no-games {
+  min-height: 800px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+@media (max-width: 575.98px) {
+  #no-games-gif {
+    max-width: 280px;
+  }
+}
+.gif-artist {
+  display: none;
+}
+#no-games-gif {
+  width: auto;
+}
+
+#no-games-gif:hover + .gif-artist {
+  display: block;
+  color: #000000;
+}
 .footer {
   color: white;
   font-size: small;

@@ -5,7 +5,10 @@ function getApiData(data) {
   // first check if there are any games at all
   if(events.length == 0) {
   // no games today checkout the other links for different sports or maybe create a cool message??
-    console.log("No Games Today!")
+    changeBodyBgWhite()
+    let messageDiv = document.getElementById("no-games-message");
+    if(!messageDiv)
+      document.getElementById('main-container').insertAdjacentHTML('afterbegin', getNoGamesMessageDiv());
   }
   // elif card-deck is empty then loadApiData to create cards
   else if(events.length > 0 && divCount == 0) {
@@ -16,6 +19,29 @@ function getApiData(data) {
     updateData(events);
   }
 };
+
+function changeBodyBgWhite() {
+  let body = document.getElementById('body');
+  body.className = body.className.replace('bg-light-grey', 'bg-white');
+}
+
+function getNoGamesMessageDiv() {
+
+  let htmlString= `
+  <div class="row">
+    <div class="col col-sm-2 col-md-12"> 
+      <div id="no-games-message" class="no-games text-center py-4">
+      <h1 >Sorry, there are no games today.</h1>
+      <a style="text-decoration: none;" href="https://dribbble.com/shots/10558932-?utm_source=Clipboard_Shot&utm_campaign=MarkusM&utm_content=%F0%9F%8F%80&utm_medium=Social_Share&utm_source=Clipboard_Shot&utm_campaign=MarkusM&utm_content=%F0%9F%8F%80&utm_medium=Social_Share">  
+        <img class="pt-5" id="no-games-gif" src="../assets/basketball.gif">
+        <div class="gif-artist">Art by: Markus Magnusson</div>
+      </a>
+      </div>
+    </div>
+  </div>`;
+
+  return htmlString;
+}
 
 function updateData(data) {
   events = data;
