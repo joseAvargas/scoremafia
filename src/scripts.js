@@ -50,6 +50,7 @@ function updateData(data) {
     let homeTeam = getHomeTeamData(events, i);
     let awayTeam = getAwayTeamData(events, i);
     let gameDetails = getGameDetails(events, i);
+    let topPerformers = getTopPerformers(events, i);
 
     let changeHomeScore = homeTeam.teamName + "-" + i.toString();
     let homeScoreObject = document.getElementById(changeHomeScore);
@@ -62,10 +63,16 @@ function updateData(data) {
     let getTime = "time-" + i.toString();
     let timeObject = document.getElementById(getTime);
     timeObject.innerHTML = checkTime(gameDetails.status, gameDetails.gameTime.toUpperCase(), gameDetails.quarter, gameDetails.clock, homeTeam.score, awayTeam.score);
-
+    
+    updateBackCards(i, homeTeam, awayTeam, gameDetails, topPerformers);
     markWinningTeam(i, ...checkForWinningTeam(...getWinnerStates(events, i)));
-
   }
+}
+
+function updateBackCards(num, homeTeam, awayTeam, gameDetails, topPerformers) {
+  let backCardNode = document.getElementById(`backcard-performers-${num}`);
+  let backCardUpdated = createBackCard(num, homeTeam, awayTeam, gameDetails, topPerformers);
+  backCardNode.innerHTML = backCardUpdated;
 }
 
 function checkTime(gStatus, gTime, quarter, clock, homeS, awayS) {
@@ -119,7 +126,7 @@ function loadApiData(apiData) {
 
 };
 
-function createBackCard(homeTeam, awayTeam, gameDetails, topPerformers)
+function createBackCard(num, homeTeam, awayTeam, gameDetails, topPerformers)
 {
   let htmlString;
 
@@ -202,7 +209,9 @@ function createCards(num, homeTeam, awayTeam, gameDetails, time, topPerformers)
                 <span class="card-return-icon-left">
                     <button class="btn text-white" title="view score" onclick="flip('card-${num}')"><i class="text-medium-125 fas fa-undo-alt fa-2x"></i></button>
                 </span>
-                ${createBackCard(homeTeam, awayTeam, gameDetails, topPerformers)}
+                <div id="backcard-performers-${num}">
+                ${createBackCard(num, homeTeam, awayTeam, gameDetails, topPerformers)}
+                </div>
             </div>
         </div>
     </div>`
