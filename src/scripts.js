@@ -29,10 +29,10 @@ function getNoGamesMessageDiv() {
 
   let htmlString= `
   <div class="row">
-    <div class="col col-sm-2 col-md-12"> 
+    <div class="col col-sm-2 col-md-12">
       <div id="no-games-message" class="no-games text-center py-4">
       <h1 >Sorry, there are no games today.</h1>
-      <a style="text-decoration: none;" href="https://dribbble.com/shots/10558932-?utm_source=Clipboard_Shot&utm_campaign=MarkusM&utm_content=%F0%9F%8F%80&utm_medium=Social_Share&utm_source=Clipboard_Shot&utm_campaign=MarkusM&utm_content=%F0%9F%8F%80&utm_medium=Social_Share">  
+      <a style="text-decoration: none;" href="https://dribbble.com/shots/10558932-?utm_source=Clipboard_Shot&utm_campaign=MarkusM&utm_content=%F0%9F%8F%80&utm_medium=Social_Share&utm_source=Clipboard_Shot&utm_campaign=MarkusM&utm_content=%F0%9F%8F%80&utm_medium=Social_Share">
         <img class="pt-5" id="no-games-gif" src="../assets/basketball.gif">
         <div class="gif-artist">Art by: Markus Magnusson</div>
       </a>
@@ -63,7 +63,7 @@ function updateData(data) {
     let getTime = "time-" + i.toString();
     let timeObject = document.getElementById(getTime);
     timeObject.innerHTML = checkTime(gameDetails.status, gameDetails.gameTime.toUpperCase(), gameDetails.quarter, gameDetails.clock, homeTeam.score, awayTeam.score);
-    
+
     updateBackCards(i, homeTeam, awayTeam, gameDetails, topPerformers);
     markWinningTeam(i, ...checkForWinningTeam(...getWinnerStates(events, i)));
   }
@@ -92,12 +92,12 @@ function checkTime(gStatus, gTime, quarter, clock, homeS, awayS) {
     time = "Q" + quarter + " " + clock;
   }
   // check for end of quarter
-  else if(quarter in [1, 3] && clock === '0.0') {
+  else if([1, 3].includes(quarter) && clock == '0.0') {
 
     time = "End of Q" + quarter;
   }
   // check for half time
-  else if(quarter === 2 && clock === '0.0') {
+  else if(quarter == 2 && clock == '0.0') {
     time = "Half Time";
   }
   // check for overtime
