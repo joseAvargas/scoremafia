@@ -92,7 +92,7 @@ function checkTime(gStatus, gTime, quarter, clock, homeS, awayS) {
     time = "Q" + quarter + " " + clock;
   }
   // check for end of quarter
-  else if(quarter in [1, 3] && clock == '0.0') {
+  else if([1, 3].includes(quarter) && clock == '0.0') {
 
     time = "End of Q" + quarter;
   }
